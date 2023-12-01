@@ -3,25 +3,14 @@ const ExpressError = require('./expressError');
 
 const app = express();
 
-const dogs = ['Sage', 'Milo', 'Zazu'];
-
-app.get('/dogs/:dogName', function (req, res, next) {
-    const dogName = req.params.dogName;
-
-    try {
-        if (!dogs.includes(dogName)) {
-            throw new ExpressError(`${dogName} isn't in the house :(`, 404)
-        };
-        return res.send(`${dogName} is in the house!`);
-    } catch (err) {
-        next(err);
-    };
-});
-
 
 //route to find the mean of nums
 app.get('/mean', function (req, res, next) {
     try {
+        if(!req.query.nums) {
+            throw new ExpressError(`Cannot find mean of empty list`, 400);
+        }
+
         let nums = req.query.nums.split(',');
         nums = nums.map(num => parseInt(num));
         if (nums.includes(NaN)) {
@@ -42,8 +31,13 @@ app.get('/mean', function (req, res, next) {
 //route to find the median of nums
 app.get('/median', function (req, res, next) {
     try {
+        if(!req.query.nums) {
+            throw new ExpressError(`Cannot find median of empty list`, 400);
+        }
+
         let nums = req.query.nums.split(',');
         nums = nums.map(num => parseInt(num));
+
         if (nums.includes(NaN)) {
             throw new ExpressError(`Cannot find median of ${req.query.nums}. Perhaps they are not all integers?`, 400);
         }
@@ -76,10 +70,15 @@ app.get('/median', function (req, res, next) {
 //route to find mode of nums
 app.get('/mode', function (req, res, next) {
     try {
+        if(!req.query.nums) {
+            throw new ExpressError(`Cannot find mode of empty list`, 400);
+        }
+
         let nums = req.query.nums.split(',');
         nums = nums.map(num => parseInt(num));
+
         if (nums.includes(NaN)) {
-            throw new ExpressError(`Cannot find median of ${req.query.nums}. Perhaps they are not all integers?`, 400);
+            throw new ExpressError(`Cannot find mode of ${req.query.nums}. Perhaps they are not all integers?`, 400);
         }
         console.log(nums);
         let mode = {};
