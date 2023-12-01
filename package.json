@@ -1,0 +1,14 @@
+{
+  "name": "express_calculator",
+  "version": "1.0.0",
+  "description": "a simple node server to calculate mean, median, and mode of n nums",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brenden Arias",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
